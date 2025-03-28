@@ -72,6 +72,7 @@ Receives a meal object with fields like:
   strMeal, strMealThumb, strCategory, strInstructions,
   strIngredientX, strMeasureX, etc.
 */
+
 function displayMealData(meal) {
   const mealContainer = document.getElementById("meal-container");
 
@@ -93,13 +94,17 @@ function displayMealData(meal) {
   mealContainer.innerHTML = mealHTML;
 }
 
-/*
-Convert MealDB Category to a TheCocktailDB Spirit
-Looks up category in our map, or defaults to 'cola'
-*/
-function mapMealCategoryToDrinkIngredient(category) {
-  if (!category) return "cola";
-  return mealCategoryToCocktailIngredient[category] || "cola";
+function getIngredientsList(meal) {
+  let ingredientsHTML = '';
+  for (let i = 1; i <= 20; i++) {
+    const ingredient = meal[`strIngredient${i}`];
+    const measure = meal[`strMeasure${i}`];
+
+    if (ingredient && ingredient !== "" && measure && measure !== "") {
+      ingredientsHTML += `<li>${ingredient} - ${measure}</li>`;
+    }
+  }
+  return ingredientsHTML;
 }
 
 

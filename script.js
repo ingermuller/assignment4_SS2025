@@ -48,6 +48,7 @@ function init() {
  Fetch a Random Meal from TheMealDB
  Returns a Promise that resolves with the meal object
  */
+
 function fetchRandomMeal() {
     return fetch("https://www.themealdb.com/api/json/v1/1/random.php")
       .then(response => {
@@ -57,10 +58,11 @@ function fetchRandomMeal() {
         return response.json();
     })
     .then(data => {
+      console.log(data);
         return data.meals[0];
     })
     .catch(error => {
-        console.error("Feilmelding", error);
+      throw error;
     });
 }
 
@@ -70,9 +72,40 @@ Receives a meal object with fields like:
   strMeal, strMealThumb, strCategory, strInstructions,
   strIngredientX, strMeasureX, etc.
 */
+
 function displayMealData(meal) {
-    // Fill in
+  const mealContainer = document.getElementById("meal-container");
+
+  const ingredientsList = getIngredientsList(meal);
+  
+  const mealHTML = `
+    <h2>${meal.strMeal}</h2>
+    <img src="${meal.strMealThumb}"/>
+    <p>Kategori: ${meal.strCategory}</p>
+    <h3>Ingredients</h3>
+     <ul>
+      ${ingredientsList}
+    </ul>
+    <h3>Instructions</h3>
+    <p>${meal.strInstructions}</p>
+  `;
+
+  mealContainer.innerHTML = mealHTML;
 }
+
+function getIngredientsList(meal) {
+  let ingredientsHTML = '';
+  for (let i = 1; i <= 20; i++) {
+    const ingredient = meal[`strIngredient${i}`];
+    const measure = meal[`strMeasure${i}`];
+
+    if (ingredient && ingredient !== "" && measure && measure !== "") {
+      ingredientsHTML += `<li>${ingredient} - ${measure}</li>`;
+    }
+  }
+  return ingredientsHTML;
+}
+
 
 /*
 Convert MealDB Category to a TheCocktailDB Spirit

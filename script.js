@@ -48,8 +48,22 @@ function lastmatprogram() {
  Fetch a Random Meal from TheMealDB
  Returns a Promise that resolves with the meal object
  */
+
 function fetchRandomMeal() {
-    // Fill in
+    return fetch("https://www.themealdb.com/api/json/v1/1/random.php")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Kunne ikke hente måltid");
+        }
+        return response.json();
+    })
+    .then(data => {
+      console.log(data);
+        return data.meals[0];
+    })
+    .catch(error => {
+      throw error;
+    });
 }
 
 /*
@@ -59,7 +73,24 @@ Receives a meal object with fields like:
   strIngredientX, strMeasureX, etc.
 */
 function displayMealData(meal) {
-    // Fill in
+  const mealContainer = document.getElementById("meal-container");
+
+  const ingredientsList = getIngredientsList(meal);
+
+  const mealHTML = `
+    <h2>${meal.strMeal}</h2>
+    <img src="${meal.strMealThumb}"/>
+    <p>Category: ${meal.strCategory}</p>
+    <p>Area: ${meal.strArea}</p>
+    <h3>Ingredients</h3>
+     <ul>
+      ${ingredientsList}
+    </ul>
+    <h3>Instructions</h3>
+    <p>${meal.strInstructions}</p>
+  `;
+
+  mealContainer.innerHTML = mealHTML;
 }
 
 /*

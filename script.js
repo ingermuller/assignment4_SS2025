@@ -81,13 +81,13 @@ function displayMealData(meal) {
   const mealHTML = `
     <h2>${meal.strMeal}</h2>
     <img src="${meal.strMealThumb}"/>
-    <p>Category: ${meal.strCategory}</p>
-    <p>Area: ${meal.strArea}</p>
-    <h3>Ingredients</h3>
+    <p>Kategori: ${meal.strCategory}</p>
+    <p>Område: ${meal.strArea}</p>
+    <h3>Ingredienser</h3>
      <ul>
       ${ingredientsList}
     </ul>
-    <h3>Instructions</h3>
+    <h3>Fremgangsmåte</h3>
     <p>${meal.strInstructions}</p>
   `;
 

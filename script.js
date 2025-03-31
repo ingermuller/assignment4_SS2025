@@ -20,6 +20,10 @@ const mealCategoryToCocktailIngredient = {
   // Add more if needed; otherwise default to something like 'cola'
 };
 
+function mapMealCategoryToDrinkIngredient(category) {
+  return mealCategoryToCocktailIngredient[category] || "cola"; 
+}
+
 /*
     2) Main Initialization Function
        Called on page load to start all the requests:
@@ -37,7 +41,7 @@ function lastmatprogram() {
       return fetchDrikkeMedIngrediens(spirit);
         })
     .then((cocktail) => {
-      displayCocktailData(cocktail);
+      visDrikkeinfo(cocktail);
     })
     .catch((error) => {
       console.error("Error:", error);
